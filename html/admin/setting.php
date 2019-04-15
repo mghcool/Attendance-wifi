@@ -9,14 +9,10 @@ if(!isset($_SESSION['login'])){
 $json_string = file_get_contents('./class.json');
 // 把JSON字符串转成PHP数组
 $class_all = json_decode($json_string, true);
-//获取系统ip、子网掩码、网关、DNS
+//获取系统ip和子网掩码
 $ifconfig = shell_exec('ifconfig eth0'); 
-$ip_ago = substr(strstr(strstr($ifconfig,' netmask',1), 'inet'), 5);	//位于‘inet’之后5个字符，‘ netmask’之前的字符串
-$mask_ago = substr(strstr(strstr($ifconfig,'  broadcast',1), 'netmask'), 8);
-$gateway_ago = shell_exec('netstat -r'); 
-$gateway_ago = substr(strstr(strstr($gateway_ago,'0.0.0.0',1), 'default'), 16,-5); 
-$dns_ago = shell_exec('cat /etc/resolv.conf');
-$dns_ago = substr(strstr($dns_ago, 'nameserver'),11,-1);
+$ip_ago = substr((strstr((strstr($ifconfig,' netmask',1)), 'inet')), 5);	//位于‘inet’之前5个字符，‘ netmask’之后的字符串
+$mask_ago = substr((strstr((strstr($ifconfig,'  broadcast',1)), 'netmask')), 8);
 ?>
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -116,13 +112,13 @@ $dns_ago = substr(strstr($dns_ago, 'nameserver'),11,-1);
 							<div class="layui-inline">
 								<label class="layui-form-label" style="width:90px;">默认网关</label>
 								<div class="layui-input-inline">
-									<input type="text" name="gateway" placeholder="<?php echo $gateway_ago; ?>" autocomplete="off" class="layui-input" style="width:140px;">  
+									<input type="text" name="gateway"  autocomplete="off" class="layui-input" style="width:140px;">  
 								</div>
 							</div>
 							<div class="layui-inline">
 								<label class="layui-form-label" style="width:90px;">DNS</label>
 								<div class="layui-input-inline">
-									<input type="text" name="dns" placeholder="<?php echo $dns_ago; ?>" autocomplete="off" class="layui-input" style="width:140px;">  
+									<input type="text" name="dns" autocomplete="off" class="layui-input" style="width:140px;">  
 								</div>
 							</div>
 							</center>

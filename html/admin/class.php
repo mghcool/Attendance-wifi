@@ -149,7 +149,7 @@ layui.use(['laydate'], function(){
 }
 });
 
-function popup(cont){	//弹窗
+function popup(cont,url){	//弹窗
 layer.open({
 	type: 1			//类型
 	,area: '300px'	//定义宽度

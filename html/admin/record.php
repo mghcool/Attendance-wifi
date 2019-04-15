@@ -13,6 +13,7 @@ if(!isset($_SESSION['login'])){
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<title>考勤管理</title>
 	<link href="./bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet"/> 
+	<link href="./layui-2.4.5/css/layui.css" rel="stylesheet" media="all">
 	<script type="text/javascript" src="./jquery-2.1.1/jquery.min.js"></script>
 	<script src="./bootstrap-3.3.7/js/bootstrap.min.js"></script>
 </head>
