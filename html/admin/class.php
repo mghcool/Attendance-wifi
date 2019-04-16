@@ -72,6 +72,7 @@ $class_time = json_decode($json_string, true);
 				    <div class="layui-input-inline" style="width:200px;">
 				    	<input type="text" name="remarks"  autocomplete="off" class="layui-input">
 				    </div>
+				    <input type="hidden" name="class_only" value="<?php echo time(); ?>">
 				    &nbsp;&nbsp;&nbsp;&nbsp;
 				    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">添加课时</button>
 				</div>					
@@ -89,12 +90,16 @@ $class_time = json_decode($json_string, true);
 				</thead>
 				<tbody>
 					<?php
-					for($i=0;$i<count($class_time);++$i){ 
-						echo "<tr class='info'><td>".($i+1)."</td>
-						<td class='text-center'>".$class_time[$i]['start_time']."-".$class_time[$i]['over_time']."</td>
-						<td class='text-center'>".$class_time[$i]['start_date']."-".$class_time[$i]['over_date']."</td>
-						<td >".$class_time[$i]['remarks']."</td>
-						<td class='text-center'><a href='class.php?del=".$i."' class='layui-btn layui-btn-xs layui-btn-danger'>删除课时</a></td></tr>"; } 
+					$i = 0;
+					foreach($class_time as $value){ 
+						$i++;
+						$o = array_search($value,$class_time);
+						echo "<tr class='info'><td>".$i."</td>
+						<td class='text-center'>".$value['start_time']."-".$value['over_time']."</td>
+						<td class='text-center'>".$value['start_date']."-".$value['over_date']."</td>
+						<td >".$value['remarks']."</td>
+						<td class='text-center'><a href='class.php?del=".$o."' class='layui-btn layui-btn-xs layui-btn-danger'>删除课时</a></td></tr>";
+					}
 					?>					
 				</tbody>
 			</table>
@@ -175,11 +180,12 @@ $over_time=isset($_POST['over_time'])?$_POST['over_time']:null;
 $start_date=isset($_POST['start_date'])?$_POST['start_date']:null;
 $over_date=isset($_POST['over_date'])?$_POST['over_date']:null;
 $remarks=isset($_POST['remarks'])?$_POST['remarks']:null;
+$class_only=isset($_POST['class_only'])?$_POST['class_only']:null;
 
 if(isset($_GET['del'])){
 	$del=$_GET['del'];
 	array_splice($class_time, $del, 1);		//删除值
-	//JSON_UNESCAPED_UNICODE防止将中文编码
+	//JSON_UNESCAPED_UNICODE防止将中文乱码
 	$json_string = json_encode($class_time,JSON_UNESCAPED_UNICODE);	
 	// 写入文件
 	file_put_contents('class_time.json', $json_string);
@@ -188,14 +194,14 @@ if(isset($_GET['del'])){
 
 if($start_time||$over_time||$start_date||$over_date){
 	if($start_time&&$over_time&&$start_date&&$over_date){
-		$num = count($class_time);
-		$class_time[$num]['start_time']=$start_time;
-		$class_time[$num]['over_time']=$over_time;
-		$class_time[$num]['start_date']=$start_date;
-		$class_time[$num]['over_date']=$over_date;
-		if($remarks){$class_time[$num]['remarks']=$remarks;}
-			else{$class_time[$num]['remarks']='';}
-		$json_string = json_encode($class_time,JSON_UNESCAPED_UNICODE);	//JSON_UNESCAPED_UNICODE防止将中文编码
+		//$num = count($class_time);
+		$class_time[$class_only]['start_time']=$start_time;
+		$class_time[$class_only]['over_time']=$over_time;
+		$class_time[$class_only]['start_date']=$start_date;
+		$class_time[$class_only]['over_date']=$over_date;
+		if($remarks){$class_time[$class_only]['remarks']=$remarks;}
+			else{$class_time[$class_only]['remarks']='';}
+		$json_string = json_encode($class_time,JSON_UNESCAPED_UNICODE);	//JSON_UNESCAPED_UNICODE防止将中文乱码
 		// 写入文件
 		file_put_contents('class_time.json', $json_string);
 		echo "<script>popup('添加成功 ！')</script>";

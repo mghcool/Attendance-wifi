@@ -1,10 +1,12 @@
 import re
-import codecs
-import subprocess
 import os
+import json
+import time
+import codecs
 import pymysql
-import datetime  # 日期
-import logging  # 日志
+import logging
+import subprocess
+
 
 #日志服务
 logging.basicConfig(level=logging.INFO,  # 等级
@@ -20,8 +22,25 @@ file_handle.write('\n\n\n\n\n\n\n\n\n\n\n\n')
 file_handle.close()
 
 
+def class_time():
+    time_now = time.strftime("%Y-%m-%d %H:%M", time.localtime())
+    file = open("/var/www/html/admin/class_time.json", encoding='utf-8')
+    class_all = json.load(file)
+    file.close()
+    date_now = int(time_now[0:4]+time_now[5:7]+time_now[8:10])
+    time_now = int(time_now[11:13]+time_now[14:16])
+    for i in class_all:
+        start_d = int(class_all[i]['start_date'][0:4]+class_all[i]['start_date'][5:7]+class_all[i]['start_date'][8:10])
+        over_d = int(class_all[i]['over_date'][0:4]+class_all[i]['over_date'][5:7]+class_all[i]['over_date'][8:10])
+        if(start_d <= date_now <= over_d):
+            start = int(class_all[i]['start_time'][0:2]+class_all[i]['start_time'][3:5])
+            over = int(class_all[i]['over_time'][0:2]+class_all[i]['over_time'][3:5])
+            if(start <= time_now <= over):
+                return str(i)
+    return '无课'
+
 def mysql(s, m):
-    time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     db = pymysql.connect("127.0.0.1", "root", "mgh", "Attendance")
     cursor = db.cursor()
     try:
@@ -33,11 +52,11 @@ def mysql(s, m):
             name = row[0]
             clas = row[1]
         #记录接入时间
-        sql = 'insert into record(name,class,status,date) values(' + '"'+name+ '"' + ','+ '"' +clas+ '"' +','+ '"' +s+'"'+','+ '"' +time+'"'+')'
+        sql = 'insert into record(name,class,status,date,class_only) values("'+name+'","'+clas+'","'+s+'","'+date_time+'","'+class_time()+'")'
         cursor.execute(sql)
         db.commit()
         #更新连接状态
-        sql = "UPDATE `user` SET `status` = '"+s+"', `date` = '"+time+"' WHERE `user`.`mac` = '"+m+"'"
+        sql = "UPDATE `user` SET `status` = '"+s+"', `date` = '"+date_time+"' WHERE `user`.`mac` = '"+m+"'"
         cursor.execute(sql)
         db.commit()
     except:
@@ -57,7 +76,9 @@ while True:
             start = r_line[11:28]
             mysql('on', start)
             logging.info(('设备连接：'+start))
+            
         if(r_line.find('AP-STA-DISCONNECTED') != -1):  # 搜索断开字符
             stop = r_line[27:44]
             mysql('off', stop)
             logging.info(('设备断开：'+stop))
+            
