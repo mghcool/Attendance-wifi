@@ -15,14 +15,8 @@ logging.basicConfig(level=logging.INFO,  # 等级
                     filename='/home/pi/Attendance.log',  # 文件名
                     filemode='a',)  # 追加模式，w是覆写模式
 
-
-'''将文件覆盖空白行，防止之前的内容出现'''
-file_handle = open('/home/pi/hostapd.log', mode='a')
-file_handle.write('\n\n\n\n\n\n\n\n\n\n\n\n')
-file_handle.close()
-
-
-def class_time():
+#判断签到时属于哪个课时
+def class_time():   
     time_now = time.strftime("%Y-%m-%d %H:%M", time.localtime())
     file = open("/var/www/html/admin/class_time.json", encoding='utf-8')
     class_all = json.load(file)
@@ -39,6 +33,7 @@ def class_time():
                 return str(i)
     return '无课'
 
+#将签到信息写入数据库
 def mysql(s, m):
     date_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     db = pymysql.connect("127.0.0.1", "root", "mgh", "Attendance")

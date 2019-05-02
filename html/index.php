@@ -38,7 +38,7 @@ $class_all = json_decode($json_string, true);
 
   		<div class="layui-form-item">
   			<br/><br/>
-			<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formDemo">立即提交</button>
+			<button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formDemo" onclick="layer.load(0,{time: 4*1000, shade: [0.7, '#393D49']}, {shadeClose: true});">立即提交</button>
  		</div>	
 	</form>
 </div>
