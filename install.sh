@@ -37,7 +37,7 @@ sudo apt install lrzsz
 echo "============================安装ap依赖工具============================"
 sudo apt install  haveged -y
 sudo apt install dnsmasq -y
-sudo apt install hostapd=2:2.4-1+deb9u2 -y
+sudo apt install hostapd=2:2.4-1+deb9u3 -y
 
 
 echo "============================安装花生壳============================"
