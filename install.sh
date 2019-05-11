@@ -50,7 +50,13 @@ rm phddns.deb
 echo "============================安装pip3============================"
 sudo apt install python3-pip -y || sudo apt install python3-pip -y
 echo "更新pip3..."
-sudo pip3 install -U pip
+while [ "1" = "1" ]
+do
+	sudo pip3 install -U pip
+	if [ $? -eq 0 ]; then
+	    break
+	fi
+done
 echo "pip3换源..."
 sudo pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
