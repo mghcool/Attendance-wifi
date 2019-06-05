@@ -3,10 +3,9 @@
 
 echo "============================更换国内源============================"
 echo "清华源"
-echo deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi > /etc/apt/sources.list
-echo deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main contrib non-free rpi >> /etc/apt/sources.list
-echo deb http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui > /etc/apt/sources.list.d/raspi.list
-echo deb-src http://mirror.tuna.tsinghua.edu.cn/raspberrypi/ stretch main ui >> /etc/apt/sources.list.d/raspi.list
+echo deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main non-free contrib > /etc/apt/sources.list
+echo deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ stretch main non-free contrib >> /etc/apt/sources.list
+echo deb http://mirrors.tuna.tsinghua.edu.cn/raspberrypi/ stretch main > /etc/apt/sources.list.d/raspi.list
 
 
 echo "============================更新软件============================"
