@@ -61,7 +61,7 @@ def mysql(s, m):
 
 
 '''循环扫描设备'''
-p = subprocess.Popen('sudo create_ap -d -g 192.168.10.1 wlan0 eth0 102test 123456789', shell=True,
+p = subprocess.Popen('sudo create_ap -d -g 192.168.10.1 wlan0 eth0 Attendance 123456789', shell=True,
                      stdout=subprocess.PIPE, stderr=subprocess.PIPE,)  # 起一个进程，执行shell命令
 while True:
     line = p.stdout.readline()  # 实时获取行
