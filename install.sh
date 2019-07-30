@@ -107,7 +107,7 @@ mysql -h${HOSTNAME}  -P${PORT}  -u${USERNAME} -p${PASSWORD} ${DBNAME} -e"${sql}"
 mysql -h${HOSTNAME}  -P${PORT}  -u${USERNAME} -p${PASSWORD} ${DBNAME} -e"ALTER TABLE user ADD PRIMARY KEY(mac);"
 
 echo "创建数据表record..."
-sql="create table IF NOT EXISTS record (name varchar(10), class varchar(20), status varchar(5), date varchar(20), class_only varchar(15))"
+sql="create table IF NOT EXISTS record (name varchar(10), class varchar(20), status varchar(5), date varchar(20))"
 mysql -h${HOSTNAME}  -P${PORT}  -u${USERNAME} -p${PASSWORD} ${DBNAME} -e"${sql}"
 mysql -h${HOSTNAME}  -P${PORT}  -u${USERNAME} -p${PASSWORD} ${DBNAME} -e"ALTER TABLE record ADD PRIMARY KEY(date);"
 
