@@ -1,6 +1,6 @@
 # Attendance-wifi
 
-平台：树莓派3B
+平台：树莓派3B+
 
 一键安装：`wget https://gitee.com/mghcool/Attendance-wifi/raw/master/install.sh && sudo bash install.sh`
 

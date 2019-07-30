@@ -34,13 +34,13 @@ sudo apt install lrzsz
 
 
 echo "============================安装ap依赖工具============================"
-sudo apt install  haveged -y
-sudo apt install dnsmasq -y
+sudo apt install  haveged dnsmasq hostapd -y
+:'
 HOSTAPD=$(apt-cache madison hostapd | grep "hostapd | 2:2.4-1")	#获取2.4版本列表
 HOSTAPD=${HOSTAPD#*hostapd | }	#去掉左边多余
 HOSTAPD=${HOSTAPD% | http*}	#去掉右边多余
 sudo apt install hostapd=$HOSTAPD -y
-
+'
 echo "============================安装花生壳============================"
 wget -O phddns.deb http://download.oray.com/peanuthull/embed/phddns_rapi_3.0.2.armhf.deb
 sudo dpkg -i phddns.deb

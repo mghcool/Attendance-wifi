@@ -124,9 +124,8 @@ $mask_ago = substr((strstr((strstr($ifconfig,'  broadcast',1)), 'netmask')), 8);
 							</center>
 							
 						<center><br>
-								<button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">保存网络设置</button>
-	 						
-	 						</center>
+							<button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">保存网络设置</button>
+	 					</center>
 						</form>
 
 				</div>
