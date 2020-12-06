@@ -53,7 +53,7 @@ sudo apt install python3-pip -y || sudo apt install python3-pip -y
 echo "更新pip3..."
 while [ "1" = "1" ]
 do
-	sudo pip3 install -U pip
+	sudo pip3 install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 	if [ $? -eq 0 ]; then
 	    break
 	fi
@@ -139,6 +139,11 @@ sudo rm -rf /var/www/html
 sudo mv /home/pi/Attendance-wifi/html /var/www
 sudo chmod -R 777 /var/www/html
 sudo mv /home/pi/Attendance-wifi/Attendance.py /home/pi
+sudo rm -rf Attendance-wifi
+
+
+
+echo "============================添加服务============================"
 echo "添加服务..."
 sudo mv /home/pi/Attendance-wifi/Attendance.service /etc/systemd/system/
 echo "开机启动..."
